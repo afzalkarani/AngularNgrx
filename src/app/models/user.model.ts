@@ -13,4 +13,9 @@ get ExpireDate()
 {
     return this.expirationDate;
 }
+
+get userToken()
+{
+    return this.token
+}
 }

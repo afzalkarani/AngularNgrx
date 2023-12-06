@@ -1,5 +1,19 @@
 <app-header></app-header>
 <app-loading-spinner *ngIf="showloading | async"></app-loading-spinner>
+
+
+
+<div *ngIf="(loader | async) as loaderSpin">
+  <app-loading-spinner
+     *ngIf="loaderSpin.spinDialog">
+    {{loaderSpin.message}}
+  </app-loading-spinner>
+</div>
+
+
+
+
+
 <div class="container">
   <div class="row">
     <div class="col-md-12">

@@ -15,12 +15,20 @@ export class AddPostComponent implements OnInit {
 
   constructor(private store:Store<AppState>) {}
   ngOnInit(): void {
+
+
+    let new_Date: Date = new Date();
+    // Converting date to string
+    let result: string = new_Date.toLocaleString();
+
+
+
     this.postForm = new FormGroup({
-      title: new FormControl(null, [
+      title: new FormControl(`testing posts activity ${result}`, [
         Validators.required,
         Validators.minLength(6),
       ]),
-      description: new FormControl(null, [
+      description: new FormControl('testing posts activity', [
         Validators.required,
         Validators.minLength(10),
       ]),

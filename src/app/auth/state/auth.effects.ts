@@ -18,6 +18,7 @@ import {
 } from '../../store/shared/shared.actions';
 import { Router } from '@angular/router';
 import { User } from '../../models/user.model';
+import { loaderInit } from '../../shared/loader/state/loader.actions';
 
 @Injectable()
 export class AuthEffects {
@@ -35,13 +36,27 @@ export class AuthEffects {
         return this.authService.login(action.email, action.password).pipe(
           map((data) => {
             setErrorMessage({ errorMessage: '' });
-            this.store.dispatch(setLoadingSpinner({ status: false }));
+            
+            // this.store.dispatch(setLoadingSpinner({ status: false }));
+
+            this.store.dispatch(loaderInit({component:{
+              message:`Logging In`,
+              spinDialog:false}}))
+
+
             const user = this.authService.formatUser(data);
             this.authService.setUserLocalStorage(user);
             return loginSuccess({ user, redirect:true });
           }),
           catchError((err) => {
-            this.store.dispatch(setLoadingSpinner({ status: false }));
+
+            // this.store.dispatch(setLoadingSpinner({ status: false }));
+
+            this.store.dispatch(loaderInit({component:{
+              message:`Logging In`,
+              spinDialog:false}}))
+
+
             const errMessage = this.authService.getErrorMessage(
               err.error.error.message
             );
@@ -74,13 +89,27 @@ export class AuthEffects {
       exhaustMap((action) => {
         return this.authService.signUp(action.email, action.password).pipe(
           map((data) => {
-            this.store.dispatch(setLoadingSpinner({ status: false }));
+            // this.store.dispatch(setLoadingSpinner({ status: false }));
+
+
+            this.store.dispatch(loaderInit({component:{
+              message:`Logging In`,
+              spinDialog:false}}))
+
+            
             const user = this.authService.formatUser(data);
             this.authService.setUserLocalStorage(user);
             return signupSuccess({ user, redirect:true });
           }),
           catchError((err) => {
-            this.store.dispatch(setLoadingSpinner({ status: false }));
+
+            // this.store.dispatch(setLoadingSpinner({ status: false }));
+
+            this.store.dispatch(loaderInit({component:{
+              message:`Logging In`,
+              spinDialog:false}}))
+
+
             const errMessage = this.authService.getErrorMessage(
               err.error.error.message
             );
