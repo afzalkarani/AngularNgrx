@@ -14,6 +14,7 @@ import {
 import {
   Observable,
   catchError,
+  filter,
   map,
   mergeMap,
   of,
@@ -30,6 +31,7 @@ import {
 } from '../../store/shared/shared.actions';
 import { loaderInit } from '../../shared/loader/state/loader.actions';
 import { Loader } from '../../models/Loader.model';
+import { ROUTER_NAVIGATION, RouterNavigatedAction } from '@ngrx/router-store';
 
 @Injectable()
 export class PostsEffects {
@@ -174,4 +176,39 @@ export class PostsEffects {
       })
     );
   });
+
+
+
+getSinglePost$ = createEffect(()=> {
+return this.actions$.pipe(
+  ofType(ROUTER_NAVIGATION),
+  filter((r: RouterNavigatedAction)=>{
+    return  r.payload.routerState.url.startsWith("/posts/details");
+  }),
+  map((r:RouterNavigatedAction)=>{
+    return r.payload.routerState["params"]['id'];
+  }),
+  switchMap((id)=>{
+
+    let date = new Date()
+    let minutes = date.getMinutes()
+    let seconds = date.getSeconds()
+    let milliseconds = date.getMilliseconds();
+
+    console.log(`getSinglePost$ ${minutes}:${seconds}.${milliseconds}`)
+
+
+
+    return this.postsService.getPostsById(id).pipe(
+      map((post)=>{
+        const postData = [{...post, id}]
+        return loadPostsSuccess({posts: postData})
+      })
+    )
+
+  })
+)
+
+})
+
 }

@@ -15,6 +15,8 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { AuthEffects } from './auth/state/auth.effects';
 import { AuthTokenInterceptor } from './services/AuthToken.interceptor';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { CustomSerializer } from './store/router/custom-serializer';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,8 @@ import { AuthTokenInterceptor } from './services/AuthToken.interceptor';
     HttpClientModule,
     EffectsModule.forRoot([AuthEffects]),    
     StoreModule.forRoot(appReducer),
-    StoreDevtoolsModule.instrument({maxAge: 25})
+    StoreDevtoolsModule.instrument({maxAge: 25}),
+    StoreRouterConnectingModule.forRoot({serializer:CustomSerializer})
   ],
   providers: [
     provideClientHydration(),

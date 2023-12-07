@@ -10,6 +10,7 @@ import { postsReducer } from './state/posts.reducer';
 import { POST_STATE_NAME } from './state/posts.selectors';
 import { EffectsModule } from '@ngrx/effects';
 import { PostsEffects } from './state/posts.effects';
+import { PostDetailsComponent } from './post-details/post-details.component';
 
 const routes: Routes = [
   {
@@ -17,7 +18,7 @@ const routes: Routes = [
     component: PostListsComponent,
     children: [
       { path: 'posts/add', component: AddPostComponent },
-      { path: 'edit/:id', component: EditPostComponent },
+      { path: 'edit/:id', component: EditPostComponent }
     ],
   },
 ];
@@ -26,7 +27,7 @@ const routes: Routes = [
   declarations: [
     PostListsComponent, 
     AddPostComponent, 
-    EditPostComponent],
+    EditPostComponent, PostDetailsComponent],
   imports: [
     CommonModule,
     FormsModule,

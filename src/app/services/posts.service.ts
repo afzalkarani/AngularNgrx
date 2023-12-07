@@ -46,4 +46,13 @@ export class PostsService {
       `https://ngrxtrain-default-rtdb.firebaseio.com/posts/${id}.json`
     );
   }
+
+
+  getPostsById(id: string) : Observable<Post> {
+    return this.http.get<Post>(
+      `https://ngrxtrain-default-rtdb.firebaseio.com/posts/${id}.json`
+    );
+  }
+
+ 
 }

@@ -1,0 +1,26 @@
+<div class="row">
+    <div *ngIf="(post | async) as post">
+<fieldset disabled>
+    <legend> Post Details</legend>
+
+    <div class="mb-3">
+        <label for="disabledTextInput" class="form-label">ID</label>
+        <input type="text" id="title" class="form-control" placeholder="Id"  value="{{post.id}}"/> 
+      </div>
+
+
+    <div class="mb-3">
+      <label for="disabledTextInput" class="form-label">Title</label>
+      <input type="text" id="title" class="form-control" placeholder="Title"  value="{{post.title}}"/> 
+    </div>
+    <div class="mb-3">
+      <label for="disabledSelect" class="form-label">Description</label>
+      <input type="text" id="description" class="form-control" placeholder="Description" value="{{post.description}}" />
+    </div>  
+  </fieldset>
+</div>
+  <div class="mb-3">
+  <a href="" [routerLink]="['/posts']" >Back to Posts</a>
+  </div>
+
+</div>

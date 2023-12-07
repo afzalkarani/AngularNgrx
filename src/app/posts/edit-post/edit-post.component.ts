@@ -8,7 +8,6 @@ import { getPostById } from '../state/posts.selectors';
 import { Subscription } from 'rxjs';
 import { updatePost } from '../state/posts.actions';
 
-
 @Component({
   selector: 'app-edit-post',
   templateUrl: './edit-post.component.html',
@@ -21,9 +20,9 @@ export class EditPostComponent implements OnInit, OnDestroy {
 
   constructor(
     private store: Store<AppState>,
-    private fb: FormBuilder,
-    private route: ActivatedRoute,
-    private router:Router
+    private fb: FormBuilder
+    //    private route: ActivatedRoute,
+    // private router: Router
   ) {}
   ngOnDestroy(): void {
     if (this.postSubscription) {
@@ -31,23 +30,34 @@ export class EditPostComponent implements OnInit, OnDestroy {
     }
   }
   ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
-      const id = params.get('id');
-      this.postSubscription = this.store
-        .select(getPostById, { id })
-        .subscribe((data) => {
-          this.post = data;
-          this.createForm();
+    this.createForm();
+    this.postSubscription = this.store.select(getPostById).subscribe((post) => {
+      if (post) {
+      
+        this.post = post;
+        this.editForm.patchValue({
+          title: post.title,
+          description: post.description,
         });
+      }
     });
+
+
+
+    // this.route.paramMap.subscribe((params) => {
+    //   const id = params.get('id');
+    //   this.postSubscription = this.store
+    //     .select(getPostById, { id })
+    //     .subscribe((data) => {
+    //       this.post = data;
+    //       this.createForm();
+    //     });
+    // });
   }
   createForm() {
     this.editForm = this.fb.group({
-      title: [this.post.title, [Validators.required, Validators.minLength(6)]],
-      description: [
-        this.post.description,
-        [Validators.required, Validators.minLength(10)],
-      ],
+      title: [null, [Validators.required, Validators.minLength(6)]],
+      description: [null, [Validators.required, Validators.minLength(10)]],
     });
   }
 
@@ -63,7 +73,7 @@ export class EditPostComponent implements OnInit, OnDestroy {
     };
 
     this.store.dispatch(updatePost({ post }));
-    this.router.navigate(['posts'])
+   // this.router.navigate(['posts']);
   }
 
   showDescriptionErrors() {

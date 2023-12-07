@@ -22,8 +22,9 @@
                     <td>{{post.title}}</td>
                     <td>{{post.description}}</td>
                     <td>
-                        <a href="" class="btn btn-primary mt-1" [routerLink]="['edit', post.id]" style="width:100px" routerLinkActive="router-link-active">Update</a>
-                        <a class="btn btn-danger mt-1" (click) = "onDeletePost(post.id)" style="width:100px" routerLinkActive="router-link-active">Delete</a>
+                        <a href="" class="btn btn-success m-1" [routerLink]="['details', post.id]" style="width:100px" routerLinkActive="router-link-active">Details</a>
+                        <a href="" class="btn btn-primary" [routerLink]="['edit', post.id]" style="width:100px" routerLinkActive="router-link-active">Update</a>
+                        <a class="btn btn-danger" (click) = "onDeletePost(post.id)" style="width:100px" routerLinkActive="router-link-active">Delete</a>
                     </td>
                 </tr>
             </tbody>
